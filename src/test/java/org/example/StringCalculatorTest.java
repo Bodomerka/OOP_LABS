@@ -55,7 +55,7 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> calculator.add("//*\n1*2*-3")
+                () -> calculator.add("//[*]\n1*2*-3")
         );
         assertEquals("Недозволені від’ємні числа: [-3]", exception.getMessage());
     }
@@ -84,6 +84,43 @@ public class StringCalculatorTest {
         );
         assertEquals("Недозволені від’ємні числа: [-999]", exception.getMessage());
     }
+    @Test
+    public void testLongCustomDelimiter() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("//[***]\n1***2***3"));
+    }
+    @Test
+    public void testLongCustomDelimiter_2() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(10, calculator.add("//[*****]\n1*****2*****3,2\n2"));
+    }
+    @Test
+    public void testLongCustomDelimiterNegative() {
+        StringCalculator calculator = new StringCalculator();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("//[*****]\n1*****-2*****3,2\n2")
+        );
+        assertEquals("Недозволені від’ємні числа: [-2]", exception.getMessage());
+    }
+    @Test
+    public void testLongCustomDelimiterSeveralNegative() {
+        StringCalculator calculator = new StringCalculator();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("//[*****][******][*]\n1******2*-3,2\n2*3*****2,5")
+        );
+        assertEquals("Недозволені від’ємні числа: [-3]", exception.getMessage());
+    }
+    @Test
+    public void testLongCustomDelimiterSeveral() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(20, calculator.add("//[*****][******][*]\n1******2*3,2\n2*3*****2,5"));
+    }
+    @Test
+    public void testLongCustomDelimiterSeveral_2() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(30, calculator.add("//[*****][******][*][~]\n1******2*3,2\n2*3*****2,5~4******2*****4"));
+    }
 
 }
-

@@ -16,29 +16,28 @@ public class StringCalculator {
         delimiters.add(",");
         delimiters.add("\n");
 
-        // Перевірка на наявність визначеного користувачем роздільника
+        // Parse custom delimiters
         if (numbers.startsWith("//")) {
             int delimiterIndex = numbers.indexOf("\n");
             if (delimiterIndex != -1) {
                 String delimiterSection = numbers.substring(2, delimiterIndex);
                 Matcher m = Pattern.compile("\\[(.*?)\\]").matcher(delimiterSection);
                 while (m.find()) {
-                    delimiters.add(Pattern.quote(m.group(1))); // Додаємо усі роздільники між квадратними дужками
+                    delimiters.add(Pattern.quote(m.group(1)));
                 }
-                numbers = numbers.substring(delimiterIndex + 1); // Оновлюємо рядок чисел, видаляючи частину з роздільником
+                numbers = numbers.substring(delimiterIndex + 1);
             }
         }
 
-        // Перевірка на роздільники, які йдуть підряд
+        // Check if the input ends with any of the delimiters
         for (String delimiter : delimiters) {
-            if (numbers.contains(delimiter + delimiter)) {
-                throw new IllegalArgumentException("Некоректний ввід: введення не повинно містити два роздільники підряд");
+            if (numbers.endsWith(delimiter)) {
+                throw new IllegalArgumentException("Некоректний ввід: введення не повинно закінчуватися на роздільник");
             }
         }
 
-        // Заміна всіх роздільників на стандартний для спрощення подальшого розділення
         String regex = String.join("|", delimiters);
-        String[] numberArray = numbers.split(regex); // Розділяємо вхідний рядок за допомогою всіх роздільників
+        String[] numberArray = numbers.split(regex);
 
         int sum = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
@@ -47,7 +46,7 @@ public class StringCalculator {
                 int number = Integer.parseInt(numberStr.trim());
                 if (number < 0) {
                     negativeNumbers.add(number);
-                } else if (number <= 1000) { // Ігноруємо числа більше 1000
+                } else if (number <= 1000) {
                     sum += number;
                 }
             }
@@ -59,4 +58,6 @@ public class StringCalculator {
 
         return sum;
     }
+
+
 }
