@@ -33,5 +33,18 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         assertEquals(8, calculator.add("1,2,3,-1,3"));
     }
+    @Test
+    public void testAddWithNewline() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(6, calculator.add("1\n2,3"));
+    }
+
+    @Test
+    public void testAddWithInvalidInput() {
+        StringCalculator calculator = new StringCalculator();
+        assertThrows(IllegalArgumentException.class, () -> {
+            calculator.add("1,\n");
+        });
+    }
 
 }
