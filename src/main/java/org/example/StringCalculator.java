@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class StringCalculator {
 
@@ -22,7 +21,7 @@ public class StringCalculator {
             }
         }
         for (String delimiter : delimiters) {
-            numbers = numbers.replaceAll(Pattern.quote(delimiter), ",");
+            numbers = numbers.replace(delimiter, ",");
         }
 
         // Перевірка на два роздільники підряд
@@ -42,7 +41,7 @@ public class StringCalculator {
                 int number = Integer.parseInt(numberStr.trim());
                 if (number < 0) {
                     negativeNumbers.add(number);
-                } else {
+                } else if (number <= 1000) {
                     sum += number;
                 }
             }

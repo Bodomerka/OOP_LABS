@@ -70,4 +70,20 @@ public class StringCalculatorTest {
         assertEquals("Недозволені від’ємні числа: [-2, -4]", exception.getMessage());
     }
 
+    @Test
+    public void testAddWithNumbersGreaterThan1000() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(2, calculator.add("1001,2"));
+    }
+    @Test
+    public void testAddWithNumbersGreaterThan1000_2() {
+        StringCalculator calculator = new StringCalculator();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("1001,2,-999")
+        );
+        assertEquals("Недозволені від’ємні числа: [-999]", exception.getMessage());
+    }
+
 }
+
