@@ -31,7 +31,11 @@ public class StringCalculatorTest {
     @Test
     public void testAddWithMixedNumbers() {
         StringCalculator calculator = new StringCalculator();
-        assertEquals(8, calculator.add("1,2,3,-1,3"));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("1,-2,3,-1,3")
+        );
+        assertEquals("Недозволені від’ємні числа: [-2, -1]", exception.getMessage());
     }
     @Test
     public void testAddWithNewline() {
@@ -49,7 +53,21 @@ public class StringCalculatorTest {
     @Test
     public void testtestWithDelimiterInput() {
         StringCalculator calculator = new StringCalculator();
-        assertEquals(0, calculator.add("//*\n1*2*-3"));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("//*\n1*2*-3")
+        );
+        assertEquals("Недозволені від’ємні числа: [-3]", exception.getMessage());
+    }
+
+    @Test
+    public void testAddWithNegativeNumbers() {
+        StringCalculator calculator = new StringCalculator();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> calculator.add("1,-2,3,-4")
+        );
+        assertEquals("Недозволені від’ємні числа: [-2, -4]", exception.getMessage());
     }
 
 }

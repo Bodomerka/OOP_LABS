@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
 
@@ -21,7 +22,7 @@ public class StringCalculator {
             }
         }
         for (String delimiter : delimiters) {
-            numbers = numbers.replace(delimiter, ",");
+            numbers = numbers.replaceAll(Pattern.quote(delimiter), ",");
         }
 
         // Перевірка на два роздільники підряд
@@ -35,13 +36,20 @@ public class StringCalculator {
 
         String[] numberArray = numbers.split(",");
         int sum = 0;
+        List<Integer> negativeNumbers = new ArrayList<>();
         for (String numberStr : numberArray) {
             if (!numberStr.trim().isEmpty()) {
-                sum += Integer.parseInt(numberStr.trim());
+                int number = Integer.parseInt(numberStr.trim());
+                if (number < 0) {
+                    negativeNumbers.add(number);
+                } else {
+                    sum += number;
+                }
             }
+        }
+        if (!negativeNumbers.isEmpty()) {
+            throw new IllegalArgumentException("Недозволені від’ємні числа: " + negativeNumbers.toString());
         }
         return sum;
     }
 }
-
-
