@@ -1,11 +1,11 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class StringCaclucatorTest {
+public class StringCalculatorTest {
+
     @Test
     public void testAddEmptyString() {
         StringCalculator calculator = new StringCalculator();
@@ -24,10 +24,14 @@ public class StringCaclucatorTest {
         assertEquals(3, calculator.add("1,2"));
     }
     @Test
-    public void testMoreThanTwoNumbersThrowsException() {
+    public void testAddMultipleNumbers() {
         StringCalculator calculator = new StringCalculator();
-        assertThrows(IllegalArgumentException.class, () -> {
-            calculator.add("1,2,3");
-        });
+        assertEquals(6, calculator.add("1,2,3"));
     }
+    @Test
+    public void testAddWithMixedNumbers() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(8, calculator.add("1,2,3,-1,3"));
+    }
+
 }

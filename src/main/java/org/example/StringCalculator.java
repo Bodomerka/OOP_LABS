@@ -7,12 +7,15 @@ public class StringCalculator {
             return 0;
         }
         String[] numberArray = numbers.split(",");
-        if (numberArray.length > 2) {
-            throw new IllegalArgumentException("Up to 2 numbers separated by comma are allowed");
-        }
         int sum = 0;
+
         for (String numberStr : numberArray) {
-            sum += Integer.parseInt(numberStr);
+            try {
+                int number = Integer.parseInt(numberStr.trim());
+                sum += number;
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Input string can contain only numbers separated by comma", e);
+            }
         }
         return sum;
     }
