@@ -46,5 +46,10 @@ public class StringCalculatorTest {
             calculator.add("1,\n");
         });
     }
+    @Test
+    public void testtestWithDelimiterInput() {
+        StringCalculator calculator = new StringCalculator();
+        assertEquals(0, calculator.add("//*\n1*2*-3"));
+    }
 
 }
